@@ -15,16 +15,27 @@ def buscar():
         return jsonify([])
 
     url = "https://api.mercadolibre.com/sites/MLB/search"
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "Accept": "application/json"
+    }
+
     params = {
         "q": produto,
         "limit": 10
     }
 
-    resposta = requests.get(url, params=params, timeout=15)
+    resposta = requests.get(
+        url,
+        params=params,
+        headers=headers,
+        timeout=20
+    )
+
     dados = resposta.json()
 
     resultados = []
-
     for item in dados.get("results", []):
         resultados.append({
             "loja": "Mercado Livre",
